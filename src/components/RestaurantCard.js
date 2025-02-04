@@ -7,9 +7,13 @@ const RestaurantCard = (props) => {
         name,
         cuisines,
         avgRating,
-        deliveryTime,
         costForTwo
     } = resData?.info;
+
+    console.log(resData?.info);
+
+    const {deliveryTime} = resData?.info?.sla;
+
     return(
         <div className="res-card">
             <img className="res-logo" src={CDN_URL+cloudinaryImageId} alt="res-card" />

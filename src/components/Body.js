@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+import { RESTAURANTS_URL } from "../utils/constants";
 import RestaurantCard from "./RestaurantCard";
 //import resList from "../utils/mockData";
 import Shimmer from "./Shimmer";
@@ -12,10 +14,10 @@ const Body=() => {
     const [searchText,setSearchText]=useState("");
 
     const fetchData = async () => {
-        const data = await fetch("https://thingproxy.freeboard.io/fetch/https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9817001&lng=77.62841519999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+        const data = await fetch(RESTAURANTS_URL);
         const json = await data.json();
-        setListOfRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-        setFilteredListOfRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        setListOfRestaurants(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        setFilteredListOfRestaurants(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
     };
     
 
@@ -50,7 +52,9 @@ const Body=() => {
             </div>
             <div className="res-container">
                 {filteredListOfRestaurants.map((restaurant) => (
-                    <RestaurantCard key={restaurant.info.id} resData={restaurant} />
+                    <Link className="RestaurantMenuLink" key={restaurant.info.id} to={"/restaurants/"+restaurant.info.id}>
+                        <RestaurantCard resData={restaurant} />
+                    </Link>
                 )
                 )}
             </div>

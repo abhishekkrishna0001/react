@@ -23,6 +23,13 @@ const Body=() => {
 
     useEffect(() => {
         fetchData();
+        const timer=setInterval(() => {
+            console.log("Namaste React");
+        },1000);
+        return()=>{
+            console.log("use effect return");
+            clearInterval(timer);
+        };
     }, []);
 
 

@@ -3,6 +3,7 @@ import { RESTAURANTS_URL } from "../utils/constants";
 import RestaurantCard from "./RestaurantCard";
 //import resList from "../utils/mockData";
 import Shimmer from "./Shimmer";
+import useOnlineStatus from "./useOnlineStatus";
 
 import { useEffect, useState } from "react";
 
@@ -10,6 +11,8 @@ const Body=() => {
 
     const [listOfRestaurants, setListOfRestaurants]=useState([]);
     const [filteredListOfRestaurants, setFilteredListOfRestaurants] = useState([]);
+
+    const onlineStatus = useOnlineStatus();
 
     const [searchText,setSearchText]=useState("");
 
@@ -23,15 +26,12 @@ const Body=() => {
 
     useEffect(() => {
         fetchData();
-        const timer=setInterval(() => {
-            console.log("Namaste React");
-        },1000);
-        return()=>{
-            console.log("use effect return");
-            clearInterval(timer);
-        };
     }, []);
 
+    if(onlineStatus===false)
+        return(
+            <h1>Looks like you are offline!! Please check your internet connection</h1>
+        );
 
     return listOfRestaurants.length===0 ? (<Shimmer />) : (
         <div className="body">

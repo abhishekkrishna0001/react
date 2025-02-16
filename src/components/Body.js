@@ -19,8 +19,9 @@ const Body=() => {
     const fetchData = async () => {
         const data = await fetch(RESTAURANTS_URL);
         const json = await data.json();
-        setListOfRestaurants(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-        setFilteredListOfRestaurants(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        console.log(json);
+        setListOfRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        setFilteredListOfRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
     };
     
 
@@ -34,13 +35,13 @@ const Body=() => {
         );
 
     return listOfRestaurants.length===0 ? (<Shimmer />) : (
-        <div className="body">
-            <div className="filter">
-                <div className="search">
-                    <input type="text" className="search-box" value={searchText} onChange={(e) => {
+        <div className="">
+            <div className="flex">
+                <div className="p-4 m-4">
+                    <input type="text" className="border border-solid border-black" value={searchText} onChange={(e) => {
                         setSearchText(e.target.value);
                     }}/>
-                    <button className="search-btn" onClick={() => {
+                    <button className="px-4 py-2 bg-green-100 m-4 rounded-lg" onClick={() => {
                         const filteredResList=listOfRestaurants.filter(
                             (res) => res.info.name.toLowerCase().includes(searchText.toLowerCase())
                         );
@@ -48,8 +49,8 @@ const Body=() => {
                     }}
                     >Search</button>
                 </div>
-                <div className="filter-top">
-                <button className="filter-btn" onClick={() => 
+                <div className="m-4 p-4 flex items-center">
+                <button className="px-4 py-2 bg-gray-100 rounded-lg" onClick={() => 
                         {
                             const filteredList=listOfRestaurants.filter((res) => res.info.avgRating>4.5);
                             setFilteredListOfRestaurants(filteredList);
@@ -57,7 +58,7 @@ const Body=() => {
                     }>Top Rated Restaurants</button>
                 </div>
             </div>
-            <div className="res-container">
+            <div className="flex flex-wrap">
                 {filteredListOfRestaurants.map((restaurant) => (
                     <Link className="RestaurantMenuLink" key={restaurant.info.id} to={"/restaurants/"+restaurant.info.id}>
                         <RestaurantCard resData={restaurant} />

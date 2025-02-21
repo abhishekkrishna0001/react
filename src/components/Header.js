@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import {LOGO_URL} from "../utils/constants";
 import { Link } from "react-router";
 import useOnlineStatus from "./useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 
 const Header=() => {
@@ -9,10 +10,9 @@ const Header=() => {
 
     const onlineStatus=useOnlineStatus();
 
-    console.log("Header rendered");
+    const {loggedInUser} = useContext(UserContext);
 
     useEffect( () => {
-        console.log("UseEffect Called");
     },[btnName]);
 
     return(
@@ -39,8 +39,8 @@ const Header=() => {
                     <li className="px-2">
                         <Link to="/contact">Contact Us</Link>
                     </li>
-                    <li className="px-2">
-                        Cart
+                    <li className="px-2 font-bold">
+                        {loggedInUser}
                     </li>
                     <li className="px-2">
                         <button className="" onClick={() =>{

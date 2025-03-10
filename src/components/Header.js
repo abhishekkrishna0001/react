@@ -8,12 +8,11 @@ import { useSelector } from "react-redux";
 const Header=() => {
     const [btnName, setBtnName] = useState("Login");
 
-    const onlineStatus=useOnlineStatus();
+    const onlineStatus = useOnlineStatus();
 
     const {loggedInUser} = useContext(UserContext);
 
     const cartItems = useSelector((store) => store.cart.items);
-    console.log(cartItems);
 
     useEffect( () => {
     },[btnName]);

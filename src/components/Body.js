@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import { RESTAURANTS_URL } from "../utils/constants";
-import RestaurantCard, {withOpenLabel} from "./RestaurantCard";
+import RestaurantCard, {withPromotedLabel} from "./RestaurantCard";
 //import resList from "../utils/mockData";
 import Shimmer from "./Shimmer";
 import useOnlineStatus from "./useOnlineStatus";
@@ -14,7 +14,7 @@ const Body=() => {
 
     const onlineStatus = useOnlineStatus();
 
-    const RestaurantCardOpen = withOpenLabel(RestaurantCard);
+    const RestaurantCardOpen = withPromotedLabel(RestaurantCard);
 
     const [searchText,setSearchText]=useState("");
 
@@ -41,10 +41,10 @@ const Body=() => {
         <div className="">
             <div className="flex items-center">
                 <div className="p-4 m-4">
-                    <input type="text" className="border border-solid border-black" value={searchText} onChange={(e) => {
+                    <input data-testid="searchInput" type="text" className="border border-solid border-black" value={searchText} onChange={(e) => {
                         setSearchText(e.target.value);
                     }}/>
-                    <button className="px-4 py-2 bg-green-100 m-4 rounded-lg" onClick={() => {
+                    <button className="px-4 py-2 bg-green-100 m-4 rounded-lg hover:cursor-pointer" onClick={() => {
                         const filteredResList=listOfRestaurants.filter(
                             (res) => res.info.name.toLowerCase().includes(searchText.toLowerCase())
                         );
@@ -53,7 +53,7 @@ const Body=() => {
                     >Search</button>
                 </div>
                 <div className="m-4 p-4">
-                <button className="px-4 py-2 bg-gray-100 rounded-lg" onClick={() => 
+                <button className="px-4 py-2 bg-gray-100 rounded-lg hover:cursor-pointer" onClick={() => 
                         {
                             const filteredList=listOfRestaurants.filter((res) => res.info.avgRating>4.5);
                             setFilteredListOfRestaurants(filteredList);
@@ -69,7 +69,7 @@ const Body=() => {
                 {filteredListOfRestaurants.map((restaurant) => (
                     <Link className="RestaurantMenuLink" key={restaurant.info.id} to={"/restaurants/"+restaurant.info.id}>
                         {
-                            restaurant.info.isOpen? (
+                            restaurant.info.avgRating>4.5? (
                                 <RestaurantCardOpen resData={restaurant} />
                             ) :(
                                 <RestaurantCard resData={restaurant} />

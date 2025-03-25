@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import RestaurantCard from "../RestaurantCard";
-import {withOpenLabel} from "../RestaurantCard";
+import {withPromotedLabel} from "../RestaurantCard";
 import MOCK_DATA from "../mocks/resCardMock.json";
 import "@testing-library/jest-dom";
 
@@ -10,9 +10,9 @@ it("Should load the restaurant card", () => {
     expect(restaurantName).toBeInTheDocument();
 });
 
-it("Should load the restaurant card with open label", () => {
-    const RestaurantCardOpen = withOpenLabel(RestaurantCard);
+it("Should load the restaurant card with promoted label", () => {
+    const RestaurantCardOpen = withPromotedLabel(RestaurantCard);
     render(<RestaurantCardOpen resData={MOCK_DATA} />);
-    const label = screen.getByText("Open");
+    const label = screen.getByText("Promoted");
     expect(label).toBeInTheDocument();
 });
